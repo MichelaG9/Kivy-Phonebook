@@ -1,0 +1,246 @@
+WindowManager:
+    MainWindow:
+    NewContact:
+    AllContacts:
+    DeleteContact:
+    SearchContact:
+
+<Button>
+    font_size: (self.width*1.5)*0.09
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    background_color: [.67, .65, .69]
+    markup: True
+    size_hint: .3, .1
+
+<PopupNewCont>
+    Label:
+        text: "Contact added succefully"
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+    Button:
+        text: 'Exit'
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+        on_press: root.closePop()
+
+<MainWindow>
+    name: "main"
+    FloatLayout:
+        Label:
+            text: '[color=ff0099]My Phonebook[/color]'
+            markup: True
+            size_hint: 1,0.5
+            pos_hint: {"center_x": 0.5, "top":1}
+            font_size: self.width*0.1
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+
+        Button:
+            text: 'New Contact'
+            pos_hint: {'center_x':.3, 'center_y':.4}
+            on_release: 
+                app.root.current = "newcontact"
+                root.manager.transition.direction = "left"
+
+        Button:
+            text: 'Search'
+            pos_hint: {'center_x':.7, 'center_y':.4}
+            on_release: 
+                app.root.current = "searchcontact"
+                root.manager.transition.direction = "left"
+
+        Button:
+            text: 'Delete Contact'
+            pos_hint: {'center_x':.3, 'center_y':.2}
+            on_release: 
+                app.root.current = "deletecontact"
+                root.manager.transition.direction = "left"
+        
+        Button:
+            text: 'All Contacts'
+            pos_hint: {'center_x':.7, 'center_y':.2}
+            on_release: 
+                app.root.current = "allcontacts"
+                root.manager.transition.direction = "left"
+
+<NewContact>
+    name: "newcontact"
+    newcon: newcon
+    newnumber: newnumber
+
+    FloatLayout:
+        Label:
+            text: '[color=ff0099]Name: [/color]'
+            markup: True
+            size_hint: 0.35,0.5
+            pos_hint: {"top":1}
+            font_size: self.width*0.15
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+
+        TextInput:
+            id: newcon
+            multiline: False
+            size_hint: (None, None)
+            height: root.width*0.15*0.5
+            width: root.width*0.4
+            font_size: root.width*0.15*0.3
+            pos_hint: {"x":0.4, "center_y":0.75}
+
+        Label:
+            text: '[color=ff0099]Number: [/color]'
+            markup: True
+            size_hint: 0.35,0.5
+            pos_hint: {"top":1}
+            font_size: self.width*0.15
+            text_size: self.size
+            halign: 'right'
+            valign: 'bottom'
+
+        TextInput:
+            id: newnumber
+            multiline: False
+            size_hint: (None, None)
+            height: root.width*0.15*0.5
+            width: root.width*0.4
+            font_size: root.width*0.15*0.3
+            pos_hint: {"x":0.4, "y":0.5}
+
+
+        Button:
+            text: 'Add'
+            on_release: root.btn()
+            pos_hint: {'center_x':.5, 'center_y':.25}
+
+        Button:
+            text: 'Go back'
+            on_release: 
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+            pos_hint: {'center_x':.5, 'center_y':.1}
+
+<AllContacts>
+    name: "allcontacts"
+    listall: listall
+
+    FloatLayout:
+        Label:
+            text: '[color=ff0099]All contacts[/color]'
+            markup: True
+            size_hint: 1,0.3
+            pos_hint: {"top":1}
+            font_size: self.width*0.09
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+            
+        Label:
+            id: listall
+            text: ""
+            size_hint: 0.5, 0.5
+            text_size: self.size
+            font_size: root.width*0.15*0.25
+            pos_hint: {"center_x":0.5, "center_y":0.4}
+            halign: 'left'
+            valign: 'top'
+
+        Button:
+            text: 'Get'
+            on_release: root.getAll()
+            pos_hint: {'center_x':.5, 'center_y':.25}
+
+        Button:
+            text: 'Go back'
+            on_release: 
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+                root.goBack()
+            pos_hint: {'center_x':.5, 'center_y':.1}
+
+<DeleteContact>
+    name: "deletecontact"
+    todelete: todelete
+
+    FloatLayout:
+        Label:
+            text: '[color=ff0099]Name: [/color]'
+            markup: True
+            size_hint: 0.35,0.5
+            pos_hint: {"top":1}
+            font_size: self.width*0.15
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+
+        TextInput:
+            id: todelete
+            multiline: False
+            size_hint: (None, None)
+            height: root.width*0.15*0.5
+            width: root.width*0.4
+            font_size: root.width*0.15*0.3
+            pos_hint: {"x":0.4, "center_y":0.75}
+
+        Button:
+            text: 'Delete'
+            on_release: root.delete()
+            pos_hint: {'center_x':.5, 'center_y':.25}
+
+        Button:
+            text: 'Go back'
+            on_release: 
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+            pos_hint: {'center_x':.5, 'center_y':.1}
+
+<SearchContact>
+    name: "searchcontact"
+    tosearch: tosearch
+    result: result
+
+    FloatLayout:
+        Label:
+            text: '[color=ff0099]Name: [/color]'
+            markup: True
+            size_hint: 0.35,0.5
+            pos_hint: {"top":1}
+            font_size: self.width*0.15
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+
+        TextInput:
+            id: tosearch
+            multiline: False
+            size_hint: (None, None)
+            height: root.width*0.15*0.5
+            width: root.width*0.4
+            font_size: root.width*0.15*0.3
+            pos_hint: {"x":0.4, "center_y":0.75}
+
+        Label:
+            id: result
+            text: ""
+            size_hint: 0.5, 0.5
+            text_size: self.size
+            font_size: root.width*0.15*0.3
+            pos_hint: {"center_x":0.5, "center_y":0.35}
+            halign: 'left'
+            valign: 'top'
+
+        Button:
+            text: 'Search'
+            on_release: root.search()
+            pos_hint: {'center_x':.5, 'center_y':.25}
+
+        Button:
+            text: 'Go back'
+            on_release: 
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+                root.goBack()
+            pos_hint: {'center_x':.5, 'center_y':.1}
+
